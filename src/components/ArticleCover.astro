@@ -1,0 +1,66 @@
+---
+interface Props {
+  description?: string;
+  srcImage: string;
+}
+
+const { description, srcImage } = Astro.props;
+---
+
+<!-- Cover Image with overlay -->
+<div class="relative group">
+  <img
+    src={srcImage}
+    alt={description}
+    class="w-full h-96 object-cover shadow-lg"
+    id="coverImage"
+  />
+  <!-- Overlay -->
+  <div
+    class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity cursor-pointer group-hover:opacity-100"
+    id="overlay"
+  >
+    <span class="text-white text-lg font-semibold">{description}</span>
+  </div>
+</div>
+<div
+  id="imageModal"
+  class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden"
+>
+  <img
+    src={srcImage}
+    alt={description}
+    class="max-w-full max-h-full"
+    id="modalImage"
+  />
+  <button id="closeModal" class="absolute top-6 right-12 text-white text-3xl">
+    &times;
+  </button>
+</div>
+<script>
+  const overlay = document.getElementById("overlay");
+  const imageModal = document.getElementById("imageModal");
+  const closeModal = document.getElementById("closeModal");
+
+  // Open modal on click
+  overlay!.addEventListener("click", () => {
+    imageModal!.classList.remove("hidden");
+  });
+
+  // Close modal
+  closeModal!.addEventListener("click", () => {
+    imageModal!.classList.add("hidden");
+  });
+
+  // Close modal on click outside the image
+  imageModal!.addEventListener("click", (e) => {
+    imageModal!.classList.add("hidden");
+  });
+
+  // Close modal on pressing Esc
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !imageModal!.classList.contains("hidden")) {
+      imageModal!.classList.add("hidden");
+    }
+  });
+</script>
