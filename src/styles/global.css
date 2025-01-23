@@ -7,6 +7,10 @@
   src: url("/fonts/NType82Mono-Regular.otf") format("opentype");
 }
 @font-face {
+  font-family: "NType82 Mono Headline";
+  src: url("/fonts/NType82Mono-Headline.otf") format("opentype");
+}
+@font-face {
   font-family: "LetteraMonoLLCondLight";
   src: url("/fonts/LetteraMonoLLCondLight-Regular.otf") format("opentype");
 }
@@ -42,53 +46,79 @@
   .blog-content {
     @apply mx-auto text-gray-800;
   }
-
+  
   .blog-content p {
     @apply mt-4 mb-4 font-sans;
   }
-
+  
   .blog-content h1 {
     @apply text-3xl font-bold mt-8 mb-4;
   }
-
+  
   .blog-content h2 {
     @apply text-2xl font-bold mt-6 mb-4;
   }
-
+  
   .blog-content h3 {
     @apply text-xl font-bold mt-4 mb-3;
   }
-
+  
   .blog-content h4 {
     @apply text-lg font-bold mt-3 mb-2;
   }
-
+  
   .blog-content ul {
-    @apply list-disc pl-5 mt-4 font-sans;
+    @apply list-disc pl-5 font-sans;
   }
-
+  
   .blog-content ol {
-    @apply list-decimal pl-5 mt-4 font-sans;
+    @apply list-decimal pl-5 font-sans;
   }
-
+  
   .blog-content blockquote {
     @apply border-l-4 border-red-800 pl-4 italic text-gray-600 my-6;
   }
-
+  
   .blog-content img {
     @apply shadow-xl mt-4;
   }
-
+  
   .blog-content a {
-    @apply text-red-600 hover:text-red-800 underline;
+    @apply text-red-800 hover:text-red-900 underline;
   }
-
+  
   .blog-content pre {
     @apply shadow-xl bg-gray-100 p-4 overflow-x-auto text-sm mt-4;
     font-family: "FiraMono", monospace;
   }
-
+  
   .blog-content code {
     font-family: "FiraMono", monospace;
+  }
+  
+  .blog-content kbd {
+    font-family: "FiraMono", monospace;
+  }
+  
+  .blog-content .footnotes p {
+    @apply text-sm;
+  }
+  
+  .blog-content table {
+    @apply table-auto border-collapse border border-gray-300 w-full text-left;
+    font-family: "FiraMono", monospace;
+  }
+  
+  .blog-content th {
+    @apply border border-gray-300 px-4 py-2 font-bold text-gray-700 bg-gray-200;
+  }
+  
+  .blog-content tr {
+    @apply bg-white;
+    /* @apply odd:bg-white even:bg-gray-50; */
+  }
+  
+  .blog-content td {
+    @apply border border-gray-300 px-4 py-2;
   }
 }
