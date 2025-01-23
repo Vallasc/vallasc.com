@@ -8,6 +8,9 @@ export default {
         serif: ["NType82", "serif"],
         mono: ["LetteraMonoLLCondLight", "monospace"],
       },
+      fontWeight: {
+				"extra-light": 50,
+			},
     },
   },
   plugins: [
