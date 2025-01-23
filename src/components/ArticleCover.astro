@@ -1,16 +1,17 @@
 ---
+import { Image } from 'astro:assets';
 interface Props {
   description?: string;
-  srcImage: string;
+  image: ImageMetadata;
 }
 
-const { description, srcImage } = Astro.props;
+const { description = null, image } = Astro.props;
 ---
 
 <!-- Cover Image with overlay -->
 <div class="relative group">
-  <img
-    src={srcImage}
+  <Image
+    src={image}
     alt={description}
     class="w-full h-96 object-cover shadow-lg"
     id="coverImage"
@@ -27,10 +28,10 @@ const { description, srcImage } = Astro.props;
   id="imageModal"
   class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden"
 >
-  <img
-    src={srcImage}
+  <Image
+    src={image}
     alt={description}
-    class="max-w-full max-h-full"
+    class="max-h-full max-w-full object-contain"
     id="modalImage"
   />
   <button id="closeModal" class="absolute top-6 right-12 text-white text-3xl">

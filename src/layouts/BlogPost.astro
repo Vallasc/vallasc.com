@@ -13,16 +13,26 @@ const {
   coverImage,
   coverImageDescription,
   readTime,
+  showPubDate = true,
+  showComments = true,
+  lang = "en",
 } = Astro.props;
+
+
 ---
 
-<Blog title={title} description={description}>
+<Blog
+  title={title}
+  description={description}
+  enableComments={showComments}
+  lang={lang}
+>
   <main class="py-10 mb-10">
     {
       coverImage ? (
         <div class="mb-10">
           <ArticleCover
-            srcImage={coverImage}
+            image={coverImage}
             description={coverImageDescription || ""}
           />
         </div>
@@ -31,11 +41,18 @@ const {
       )
     }
     <!-- <img src="/blog/covers/fx3.jpg" alt="Cover image" class="w-full h-64 object-cover rounded-none mb-8" /> -->
-    <div class="space-y-2">
-      <h1 class="text-4xl font-semibold">{title}</h1>
-      <p class="text-gray-500 sans-text font-mono">
-        <FormattedDate date={pubDate} /> - {readTime} min
-      </p>
+    <div class="space-y-2 group">
+      <h1 class="text-4xl font-semibold cursor-pointer">
+        {title}
+        <div class="inline text-red-800 hidden group-hover:inline">;</div>
+      </h1>
+      {
+        showPubDate && (
+          <p class="text-gray-500 sans-text font-mono">
+            <FormattedDate date={pubDate} /> - {readTime} min
+          </p>
+        )
+      }
     </div>
     <div class="blog-content">
       <slot />

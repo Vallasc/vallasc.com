@@ -46,118 +46,120 @@ const searchOpen = Astro.url.searchParams.get("q") !== null;
 <html lang="en">
   <head>
     <BaseHead title="Posts" description="vallasc.com posts" />
+    <style>
+      @view-transition {
+        navigation: auto; /* enabled! */
+      }
+    </style>
   </head>
-  <body class="serif-text bg-[#fbf9f7]">
-    <div class="min-h-screen">
-      <div class="mx-auto max-w-3xl px-4 py-6 pt-20">
-        <BlogHeader />
-
-        {/* Main Content */}
-        <main class="py-12">
-          <div class="mb-6 flex justify-between items-center">
-            <h1 class="text-4xl font-semibold">Posts</h1>
-            <div>
-              <a
-                href="?q="
-                class={`p-2 rounded-md ${filterOpen || searchOpen ? "hidden" : ""}`}
-              >
-                Search
-              </a>
-              <a
-                href="?tags="
-                class={`p-2 rounded-md ${filterOpen || searchOpen ? "hidden" : ""}`}
-              >
-                Filter
-              </a>
-            </div>
+  <body class="serif-text bg-[#fbf9f7] h-screen flex flex-col">
+    <div class="flex-1 mx-auto max-w-3xl px-4 py-6 pt-20 w-full">
+      <BlogHeader />
+      {/* Main Content */}
+      <main class="py-12">
+        <div class="mb-6 flex justify-between items-center">
+          <h1 class="text-4xl font-semibold">Posts</h1>
+          <div>
             <a
-              href="/blog"
-              class={`px-4 py-2 rounded-md text-red-800 ${
-                filterOpen || searchOpen ? "" : "hidden"
-              }`}
+              href="?q="
+              class={`p-2 rounded-md ${filterOpen || searchOpen ? "hidden" : ""}`}
             >
-              Clear
+              Search
+            </a>
+            <a
+              href="?tags="
+              class={`p-2 rounded-md ${filterOpen || searchOpen ? "hidden" : ""}`}
+            >
+              Filter
             </a>
           </div>
+          <a
+            href="/blog"
+            class={`px-4 py-2 rounded-md text-red-800 ${
+              filterOpen || searchOpen ? "" : "hidden"
+            }`}
+          >
+            Clear
+          </a>
+        </div>
 
-          {/* Sezione per il filtro */}
-          <div id="tags" class={`mb-6 ${filterOpen ? "" : "hidden"}`}>
-            <!-- <h2 class="text-2xl font-semibold mb-4">Tags</h2> -->
-            <div class="flex flex-wrap gap-2">
-              {
-                allTags.map((tag) => {
-                  const isSelected = selectedTags.includes(tag);
-                  const updatedTags = isSelected
-                    ? selectedTags.filter((t) => t !== tag) // Rimuovi il tag
-                    : [...selectedTags, tag]; // Aggiungi il tag
+        {/* Sezione per il filtro */}
+        <div id="tags" class={`mb-6 ${filterOpen ? "" : "hidden"}`}>
+          <!-- <h2 class="text-2xl font-semibold mb-4">Tags</h2> -->
+          <div class="flex flex-wrap gap-2">
+            {
+              allTags.map((tag) => {
+                const isSelected = selectedTags.includes(tag);
+                const updatedTags = isSelected
+                  ? selectedTags.filter((t) => t !== tag) // Rimuovi il tag
+                  : [...selectedTags, tag]; // Aggiungi il tag
 
-                  return (
-                    <a
-                      href={`?tags=${updatedTags.join(",")}`}
-                      class={`px-4 py-2 rounded-none font-mono 
+                return (
+                  <a
+                    href={`?tags=${updatedTags.join(",")}`}
+                    class={`px-4 py-2 rounded-none font-mono 
                         text-sm font-medium leading-[1] pt-[0.8rem] ${
                           isSelected
                             ? "bg-red-800 text-white"
                             : "bg-gray-200 hover:bg-gray-300"
                         }`}
-                    >
-                      {tag}
-                    </a>
-                  );
-                })
-              }
-            </div>
-          </div>
-
-          {/* Sezione per la ricerca */}
-          <div class={`mb-6 ${searchOpen ? "" : "hidden"}`}>
-            <form
-              method="GET"
-              action={Astro.url.pathname}
-              class="flex items-center gap-2"
-            >
-              <input
-                type="text"
-                name="q"
-                placeholder="Search posts..."
-                value={Astro.url.searchParams.get("q") || ""}
-                class="flex-grow px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-700
-                focus:outline-none font-sans text-sm"
-              />
-              <button
-                type="submit"
-                class="px-4 py-2 bg-red-800 text-white rounded-none hover:bg-red-700 font-mono
-                text-sm leading-[1.1] pt-[0.8rem]"
-              >
-                SEARCH
-              </button>
-            </form>
-          </div>
-
-          {/* Sezione per la lista dei post */}
-          <div class="mt-12 space-y-10">
-            {
-              filteredPosts.map((post) => (
-                <div
-                  x-title={`${post.data.title}`}
-                  x-desc={`${post.data.description}`}
-                >
-                  <BlogArticle
-                    id={post.id}
-                    title={post.data.title}
-                    description={post.data.description}
-                    pubDate={post.data.pubDate}
-                    lang={post.data.lang}
-                    readTime={post.data.readTime}
-                    tags={post.data.tags}
-                  />
-                </div>
-              ))
+                  >
+                    {tag}
+                  </a>
+                );
+              })
             }
           </div>
-        </main>
-      </div>
-      <Footer />
+        </div>
+
+        {/* Sezione per la ricerca */}
+        <div class={`mb-6 ${searchOpen ? "" : "hidden"}`}>
+          <form
+            method="GET"
+            action={Astro.url.pathname}
+            class="flex items-center gap-2"
+          >
+            <input
+              type="text"
+              name="q"
+              placeholder="Search posts..."
+              value={Astro.url.searchParams.get("q") || ""}
+              class="flex-grow px-4 py-2 border border-gray-300 focus:ring-1 focus:ring-red-700
+                focus:outline-none font-sans text-sm"
+            />
+            <button
+              type="submit"
+              class="px-4 py-2 bg-red-800 text-white rounded-none hover:bg-red-700 font-mono
+                text-sm leading-[1.1] pt-[0.8rem]"
+            >
+              SEARCH
+            </button>
+          </form>
+        </div>
+
+        {/* Sezione per la lista dei post */}
+        <div class="mt-12 space-y-10">
+          {
+            filteredPosts.map((post) => (
+              <div
+                x-title={`${post.data.title}`}
+                x-desc={`${post.data.description}`}
+              >
+                <BlogArticle
+                  id={post.id}
+                  title={post.data.title}
+                  description={post.data.description}
+                  pubDate={post.data.pubDate}
+                  lang={post.data.lang}
+                  readTime={post.data.readTime}
+                  tags={post.data.tags}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </main>
     </div>
+    <Footer />
   </body>
 </html>

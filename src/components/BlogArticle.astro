@@ -22,26 +22,25 @@ const {
   tags,
   compressed = false,
 } = Astro.props;
-const tagsString = tags && tags.map((t) => t.toUpperCase()).join(", ");
+const tagsString =
+  tags && tags.length > 0 ? tags.map((t) => t.toUpperCase()).join(", ") : "";
 ---
 
 <article>
-  {
-    tags && (
-      <div class="mb-1 font-mono text-gray-400 sans-text font-light">
-        {tagsString}
-      </div>
-    )
-  }
+  <div class="mb-1 font-mono text-gray-400 sans-text font-light">
+    {tagsString}&nbsp;
+  </div>
   <a href={`/blog/${id}/`} class="block group">
     {
       compressed ? (
-        <h3 class="mt-1 text-xl font-bold group-hover:text-red-800 transition-colors">
+        <h3 class="mt-1 text-xl font-bold group-hover:text-red-800 transition-colors cursor-pointer">
           {title}
+          <div class="inline text-red-800 hidden group-hover:inline">;</div>
         </h3>
       ) : (
-        <h2 class="mt-1 text-2xl font-semibold group-hover:text-red-800 transition-colors">
+        <h2 class="mt-1 text-2xl font-semibold group-hover:text-red-800 transition-colors cursor-pointer">
           {title}
+          <div class="inline text-red-800 hidden group-hover:inline">;</div>
         </h2>
       )
     }
